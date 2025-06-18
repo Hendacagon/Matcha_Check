@@ -17,11 +17,7 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install requests  # 如果你的脚本需要其他库，比如 `beautifulsoup4`
-
-        # ▼▼▼ 新增依赖安装步骤 ▼▼▼
-      - name: Install dependencies
-        run: pip install bs4 requests
+        run: pip install bs4 requests  # 如果你的脚本需要其他库，比如 `beautifulsoup4`
 
       - name: Run script
         run: python marukyu-matcha_once.py
