@@ -10,7 +10,7 @@ from email.header import Header
 from email.utils import formataddr
 
 # === 配置区域 ===
-URL = 'https://www.marukyu-koyamaen.net/category/select/cid/312'
+URL = 'https://www.marukyu-koyamaen.net/category/select/cid/315'
 KEYWORD = '未发现商品'
 INTERVAL = 300  # 检测间隔（单位：秒）
 
