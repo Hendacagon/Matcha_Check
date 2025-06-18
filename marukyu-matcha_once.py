@@ -70,7 +70,7 @@ def main():
         alert_user()
         send_email()
 
-    input("按 Enter 键退出...")
+    print("按 Enter 键退出...")
 
 
 if __name__ == "__main__":
