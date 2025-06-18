@@ -2,8 +2,6 @@
 import requests
 from bs4 import BeautifulSoup
 import time
-import tkinter as tk
-from tkinter import messagebox
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
@@ -33,45 +31,39 @@ def check_keyword():
         soup = BeautifulSoup(response.text, 'html.parser')
 
         if KEYWORD in soup.get_text():
-            print(f"{time.ctime()}: 发现关键词“{KEYWORD}”，继续监控...")
+            print(f"{time.ctime()}: 发现关键词「{KEYWORD}」，继续监控...")
             return True
         else:
-            print(f"{time.ctime()}: 关键词“{KEYWORD}”未出现！")
+            print(f"{time.ctime()}: 🚨 关键词「{KEYWORD}」未出现！商品可能已上架！")
             return False
     except Exception as e:
-        print(f"{time.ctime()}: 出错了：{e}")
+        print(f"{time.ctime()}: ❌ 检测出错：{e}")
         return True
-
-def alert_user():
-    # 弹窗提醒
-    root = tk.Tk()
-    root.withdraw()
-    messagebox.showinfo("监控通知", "目标商品可能已上架！关键词“未发现商品”未出现。")
-    root.destroy()
 
 def send_email():
     try:
-        message = MIMEText('目标商品可能已上架！关键词“未发现商品”未出现。', 'plain', 'utf-8')
+        message = MIMEText('目标商品可能已上架！关键词「未发现商品」未出现。', 'plain', 'utf-8')
         message['From'] = formataddr(("商品监控程序", SENDER))
         message['To'] = Header(", ".join(RECEIVERS), 'utf-8')
-        message['Subject'] = Header("【商品提醒】可能已上架", 'utf-8')
+        message['Subject'] = Header("【紧急】抹茶商品可能已上架", 'utf-8')
 
         server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT)
         server.login(SENDER, PASSWORD)
         server.sendmail(SENDER, RECEIVERS, message.as_string())
         server.quit()
-        print("邮件已发送。")
+        print(f"{time.ctime()}: 📧 邮件通知已发送至{len(RECEIVERS)}位收件人")
     except Exception as e:
-        print(f"邮件发送失败：{e}")
+        print(f"{time.ctime()}: ❌ 邮件发送失败：{e}")
 
 def main():
+    print(f"{time.ctime()}: 🍵 开始监控抹茶商品页面...")
     should_continue = check_keyword()
+    
     if not should_continue:
-        alert_user()
         send_email()
-
-    print("按 Enter 键退出...")
-
+        print(f"{time.ctime()}: 🔔 检测到商品状态变化，程序退出")
+    else:
+        print(f"{time.ctime()}: ✅ 检测正常，程序退出")
 
 if __name__ == "__main__":
     main()
