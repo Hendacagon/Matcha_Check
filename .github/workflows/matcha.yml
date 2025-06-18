@@ -1,4 +1,4 @@
-# This is a dummy comment to trigger cron schedule
+# This is a dummy comment to trigger cron schedule.
 name: Website Status Monitor
 on:
   schedule:
