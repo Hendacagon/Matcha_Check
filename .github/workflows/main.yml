@@ -20,4 +20,4 @@ jobs:
         run: pip install requests  # 如果你的脚本需要其他库，比如 `beautifulsoup4`
 
       - name: Run script
-        run: python check_website.py
+        run: python marukyu_matcha_once.py
